@@ -53,11 +53,11 @@ export default class GradientCollection {
             ],
         
             hot_n_cold: [
-                'F26601',
-                'EB822E',
-                'D9DDC7',
-                'A2D4D0',
-                '66CBDF'
+                '#f26601',
+                '#eb822e',
+                '#d9ddc7',
+                '#a2d4d0',
+                '#66cbdf'
             ]
         }
     }

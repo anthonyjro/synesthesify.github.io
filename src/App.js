@@ -57,16 +57,16 @@ function LoginModal(props){
 
 function App() {
   const [flavor, setFlavor] = useState("rainbow"); // color gradient for the current visual
-  const [shape, setShape] = useState("star"); /* shape - shape for the current visualize */
-  const [visualMode, setVisualMode] = useState("s2D");
+  const [shape, setShape] = useState("box"); /* shape - shape for the current visualize */
+  const [visualMode, setVisualMode] = useState("s3D");
   const [loginModalShow, setloginModalShow] = useState(false); // bool for displaying login modal 
-  
   const [analysisInfo, setAnalysisInfo] = useState({});
   const [trackInfo, setTrackInfo] = useState({
     key: -1,
     loudness: 0,
     tempo: 0
   });
+  const [device_id, setDeviceId] = useState('');
   const [pauseAnimation, setPauseAnimation] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false); 
   const [acc_token, setAccToken] = useState(''); // access token required to connect with Spotify
@@ -87,7 +87,17 @@ function App() {
       setLoggedIn(true);
     }
   }, [params]);
-  
+
+
+  useEffect(() => {
+    spotifyApi.transferMyPlayback([device_id])
+    .then((res) => {
+      spotifyApi.play()
+      .then(() => {
+        console.log('Playback started');
+      }, (err) => {console.log(`Error occured: ${err?.status} - ${err?.message}`)});
+    }, (err) => {console.log(`Error occured: ${err?.status} - ${err?.message}`)})
+  }, [device_id]);
 
   /* 
   * function: getTrackAnalysis 
@@ -149,13 +159,14 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Navbar expand="lg" bg='dark' variant='dark'>
+        <Navbar expand="lg" bg='dark' variant='dark' sticky='top'>
           <Container>
             <Navbar.Brand href='/'>
               Synesthesify
             </Navbar.Brand>
             <Nav className="me-auto">
-              <NavDropdown title="Visual Mode" className='nav-dropdown' onSelect={(ek) => {setVisualMode(ek); setFlavor("rainbow"); setShape(shape_book[ek][0]);}}>
+              <NavDropdown title="Visual Mode" className='nav-dropdown' onSelect={(ek) => {
+                setVisualMode(ek); setFlavor("rainbow"); setShape(shape_book[ek][0]);}}>
                 <NavDropdown.Item eventKey={'s2D'}>2D Mode</NavDropdown.Item>
                 <NavDropdown.Item eventKey={'s3D'}>3D Mode</NavDropdown.Item>
               </NavDropdown>
@@ -207,14 +218,16 @@ function App() {
         {/* Music control section of the app below */}
         <div id='now_playing'>
           {/* The elements below are conditioned to appear depending on user's login status */}
-          {loggedIn && <ProgressBar variant='success' now={(current_pos/duration)*100} label={` ${Math.floor(current_pos/60)}:${current_pos%60 < 10 ? '0'+String(Math.floor(current_pos%60)) : Math.floor(current_pos%60)} `}/>}
+          
+          {loggedIn && <ProgressBar variant='success' now={(current_pos/duration)*100} label={` 
+          ${Math.floor(current_pos/60)}:${current_pos%60 < 10 ? '0'+String(Math.floor(current_pos%60)) : Math.floor(current_pos%60)} `}/>}
           <Button variant='success' hidden={loggedIn} onClick={() => setloginModalShow(true)}>
             Log in
           </Button>
           {loggedIn && <CustomPlayer token={acc_token} getAnalysisData={getTrackAnalysis} 
           getCurrentInfo={getSegmentValues} 
-          setPauseAnimation={setPauseAnimation} />}
-          
+          setPauseAnimation={setPauseAnimation}
+          setDeviceId={setDeviceId} />}
         </div>
       </body>
     </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Button, Spinner } from 'react-bootstrap';
 import MaterialIcon, {colorPalette} from 'material-icons-react';
+import './App.css';
 
 const SDK_SOURCE = 'https://sdk.scdn.co/spotify-player.js';
 
@@ -12,6 +13,7 @@ export default function CustomPlayer(props){
     const [newTrack, setNewTrack] = useState(false);
     const [currentPos, setCurrPos] = useState(0.0);
     const intervalId = useRef(undefined);
+    const [myDevId, setDevId] = useState('');
     const [nowPlaying, setNowPlaying] = useState({
         /* 
          * object: nowPlaying: An object defining the track currently playing in the browser
@@ -25,8 +27,13 @@ export default function CustomPlayer(props){
           albumArt: './sadface.png',
           uri: ''
       });
+    const [notPlaying, setNotPlaying] = useState({
+        prevPlaying: 'empty.png',
+        nextPlaying: 'empty.png'
+    })
     const getCurrentInfo = props.getCurrentInfo;
     const setPauseAnimation = props.setPauseAnimation;
+    const setDeviceId = props.setDeviceId;
 
     useEffect(() => {
         const script = document.createElement("script");
@@ -55,6 +62,7 @@ export default function CustomPlayer(props){
 
         player.addListener('ready', ({ device_id }) => {
             console.log('Ready with Device ID', device_id);
+            setDevId(device_id);
         });
 
         player.addListener('not_ready', ({ device_id }) => {
@@ -71,6 +79,8 @@ export default function CustomPlayer(props){
             setPaused(state.paused);
             if(!state.paused){
                 let current = state.track_window.current_track;
+                let previous = state.track_window.previous_tracks[0];
+                let next = state.track_window.next_tracks[0];
                 setCurrPos(state.position / 1000);
                 console.log(`Now playing - ${current.name}`);
                 setNowPlaying(
@@ -79,6 +89,10 @@ export default function CustomPlayer(props){
                     albumArt: current.album.images[0].url, 
                     uri: current.uri}
                 );
+                setNotPlaying(
+                   { prevPlaying: previous ? previous?.album.images[0].url : 'empty.png',
+                    nextPlaying: next ? next?.album.images[0].url : 'empty.png'}
+                )
 
                 if(intervalId.current){
                     clearInterval(intervalId.current);
@@ -98,8 +112,8 @@ export default function CustomPlayer(props){
     if(!is_active){
         return(
             <div id='playback'>
-            <Spinner animation="border" variant="light" /> <h4> Waiting for connection... <br></br>
-            Select Synesthesify as your current device on your Spotify mobile app.</h4>
+            <Spinner animation="border" variant="light" /> <h4> Waiting for connection... <br></br></h4>
+            <Button variant="secondary" id="start-playback" onClick={() => {setDeviceId(myDevId)}}>Start</Button>
             </div>
         )
         
@@ -119,8 +133,10 @@ export default function CustomPlayer(props){
         
         return(
         <div id='playback'>
-            <div>Now Playing: {nowPlaying.name}</div> 
-            <div><img src={nowPlaying.albumArt} alt='Album Art' style={{ height: 150 }}/></div> 
+            <div>Now Playing: {nowPlaying.name}</div>
+            <div><img src={notPlaying.prevPlaying} alt='Previous Album' style={{ position: 'relative', left: '50px', height: 100 }}/> 
+            <img src={nowPlaying.albumArt} alt='Album Art' style={{ position: 'relative', height: 150, zIndex: 1 }}/>
+            <img src={notPlaying.nextPlaying} alt='Next Album' style={{ position: 'relative', left: '-50px', height: 100 }}/></div>  
             <Button variant='success' id="btn-spotify" hidden={is_paused} onClick={() => { player.togglePlay(); setPauseAnimation(!is_paused); }}>
                 <MaterialIcon icon="play_arrow"  color={colorPalette.green._50}/> 
             </Button>
