@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Nav, NavDropdown, Container, Modal, Button, Navbar, ProgressBar } from 'react-bootstrap';
+import { Nav, NavDropdown, Container, Modal, Button, 
+  Navbar, ProgressBar, Stack, Card } from 'react-bootstrap';
 import './App.css';
 import { ReactP5Wrapper } from "react-p5-wrapper";
 import { Sketch2D, Sketch3D } from './sketch.js';
@@ -54,12 +55,55 @@ function LoginModal(props){
   )
 }
 
+function UsageModal(props){
+  return(
+    <Modal
+    {...props}
+    size="md"
+    aria-labelledby="contained-modal-title-vcenter"
+    centered>
+      <Modal.Header closeButton>
+        <Modal.Title>
+            Usage
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Stack direction="horizontal" gap={3}>
+        <Card.Img variant="top" src="holder.js/100px180" />
+        <Card.Body>
+          <Card.Title>Card Title</Card.Title>
+          <Card.Text>
+            Some quick example text to build on the card title and make up the
+            bulk of the card's content.
+          </Card.Text>
+        </Card.Body>
+        <Card.Body>
+          <Card.Title>Card Title</Card.Title>
+          <Card.Text>
+            Some quick example text to build on the card title and make up the
+            bulk of the card's content.
+          </Card.Text>
+        </Card.Body>
+        <Card.Body>
+          <Card.Title>Card Title</Card.Title>
+          <Card.Text>
+            Some quick example text to build on the card title and make up the
+            bulk of the card's content.
+          </Card.Text>
+        </Card.Body>
+        </Stack>
+      </Modal.Body>
+    </Modal>
+  )
+}
+
 
 function App() {
   const [flavor, setFlavor] = useState("rainbow"); // color gradient for the current visual
   const [shape, setShape] = useState("box"); /* shape - shape for the current visualize */
   const [visualMode, setVisualMode] = useState("s3D");
   const [loginModalShow, setloginModalShow] = useState(false); // bool for displaying login modal 
+  const [usageModalShow, setUsageModalShow] = useState(false); // bool for displaying usage modal 
   const [analysisInfo, setAnalysisInfo] = useState({});
   const [trackInfo, setTrackInfo] = useState({
     key: -1,
@@ -159,40 +203,43 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Navbar expand="lg" bg='dark' variant='dark' sticky='top'>
+        <Navbar expand="lg" variant='dark' fixed='top'>
           <Container>
-            <Navbar.Brand href='/'>
+            <Navbar.Brand className='nav-brand' href='/'>
               Synesthesify
             </Navbar.Brand>
             <Nav className="me-auto">
               <NavDropdown title="Visual Mode" className='nav-dropdown' onSelect={(ek) => {
                 setVisualMode(ek); setFlavor("rainbow"); setShape(shape_book[ek][0]);}}>
-                <NavDropdown.Item eventKey={'s2D'}>2D Mode</NavDropdown.Item>
-                <NavDropdown.Item eventKey={'s3D'}>3D Mode</NavDropdown.Item>
+                <NavDropdown.Item className='nav-drop-item' eventKey={'s2D'}>2D Mode</NavDropdown.Item>
+                <NavDropdown.Item className='nav-drop-item' eventKey={'s3D'}>3D Mode</NavDropdown.Item>
               </NavDropdown>
               <NavDropdown title={`Choose your flavor`} className='nav-dropdown' onSelect={(f) => setFlavor(f)}>
                 {(visualMode === "s2D" && Object.keys(gradients.g2D).map((flav) =>
                 {
-                  return (<NavDropdown.Item eventKey={flav}>{flav}</NavDropdown.Item>);
+                  return (<NavDropdown.Item className='nav-drop-item' eventKey={flav}>{flav}</NavDropdown.Item>);
                 })) || 
                 (visualMode === "s3D" && Object.keys(gradients.g3D).map((flav) =>
                 {
-                  return (<NavDropdown.Item eventKey={flav}>{flav}</NavDropdown.Item>);
+                  return (<NavDropdown.Item className='nav-drop-item' eventKey={flav}>{flav}</NavDropdown.Item>);
                 }))}
               </NavDropdown>
               <NavDropdown title={`Choose your shape`} className='nav-dropdown' onSelect={(f) => setShape(f)}>
                 {shape_book[visualMode].map((shp) =>
                 {
-                  return (<NavDropdown.Item eventKey={shp}>{shp}</NavDropdown.Item>);
+                  return (<NavDropdown.Item className='nav-drop-item' eventKey={shp}>{shp}</NavDropdown.Item>);
                 })}
               </NavDropdown>
+              <Nav.Item className='nav-link'>
+                <p onClick={() => setUsageModalShow(true)}>Usage</p>
+              </Nav.Item>
             </Nav>
           </Container>
         </Navbar>
         
       </header>
       <body className='App-body'>
-      <div>
+      <div id='p5visual'>
           {/* The visual component is rendered using p5.js. For more info: https://p5js.org/ */}
           {(visualMode === "s2D" && 
           <ReactP5Wrapper 
@@ -215,8 +262,12 @@ function App() {
         show={loginModalShow}
         onHide={() => setloginModalShow(false)} 
         />
+        <UsageModal
+        show={usageModalShow}
+        onHide={() => setUsageModalShow(false)}
+        />
         {/* Music control section of the app below */}
-        <div id='now_playing'>
+        <div className='sp-player' id='now_playing'>
           {/* The elements below are conditioned to appear depending on user's login status */}
           
           {loggedIn && <ProgressBar variant='success' now={(current_pos/duration)*100} label={` 

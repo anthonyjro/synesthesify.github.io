@@ -5,10 +5,6 @@ import Color from 'color';
 * as hexadecimal colors 
 */
 const gradients = new GradientCollection();
-const canvas_dmsn = {
-  width: 1600,
-  height: 800
-}
 // * Main function for the p5 component of the app
 
 export function Sketch2D(p){
@@ -30,7 +26,7 @@ export function Sketch2D(p){
 
   /* Function that creates the canvas and sets animation to loop */
   p.setup = () => {
-      p.createCanvas(canvas_dmsn.width, canvas_dmsn.height, p.P2D);
+      p.createCanvas(p.windowWidth, p.windowHeight, p.P2D);
       p.loop();
     }
   
@@ -121,6 +117,10 @@ export function Sketch2D(p){
     }
     
   };
+
+  p.windowResized = () => {
+    p.resizeCanvas(p.windowWidth, p.windowHeight);
+  };
 }
 
 export function Sketch3D(p){
@@ -148,7 +148,7 @@ export function Sketch3D(p){
   let new_color = 0;
 
   p.setup = () => {
-    p.createCanvas(canvas_dmsn.width, canvas_dmsn.height, p.WEBGL);
+    p.createCanvas(p.windowWidth, p.windowHeight, p.WEBGL);
     p.loop();
     tlite = [0, 75 - p.height / 2];
     blite = [0, 700 - p.height / 2];
@@ -180,7 +180,7 @@ export function Sketch3D(p){
     }
 
     if(props.factor){
-      factor =  (props.factor / 60.0 * 0.25) * 40;
+      factor =  (props.factor / 60.0 * 0.25) * 60;
       // scale = (-10.0) * props.scale;
     }
 
@@ -219,8 +219,6 @@ export function Sketch3D(p){
         p.specularMaterial(...Color(gradient[i]).rgb().array());
       }
       
-      
-
       switch(current_shape){
         case 'box':
           p.box(obj_size);
@@ -261,6 +259,10 @@ export function Sketch3D(p){
   p.doubleClicked = () => {
     let fs = p.fullscreen();
     p.fullscreen(!fs);
-  }
+  };
+
+  p.windowResized = () => {
+    p.resizeCanvas(p.windowWidth, p.windowHeight);
+  };
 
 }

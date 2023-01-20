@@ -15,15 +15,53 @@
 
 @import 'bootstrap/dist/css/bootstrap.min.css';
 
+@font-face {
+  font-family: 'MiniSystem';
+  src: url(assets/minisystem.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'UnispaceReg';
+  src: url(assets/unispace\ rg.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'UnispaceBold';
+  src: url(assets/unispace\ bd.ttf);
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'UnispaceBoldItalic';
+  src: url(assets/unispace\ bd\ it.ttf);
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'UnispaceItalic';
+  src: url(assets/unispace\ it.ttf);
+  font-weight: normal;
+  font-style: italic;
+}
+
 .App-header {
   background-color: black;
-  align-items: center;
-  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  width: max-content;
 }
 
 .App-body {
   background-color: black;
   min-height: 100vh;
+  height: auto;
+  width: max-content;
   display: flex;
   flex-direction: column;
   font-size: calc(10px + 2vmin);
@@ -35,6 +73,7 @@
 .App-link {
   color: #61dafb;
 }
+
 
 #now_playing {
   color: greenyellow;
@@ -49,7 +88,18 @@
   }
 }
 
-.nav-dropdown {
+.nav-dropdown, .nav-link {
+  font-family: 'UnispaceReg', Arial, Helvetica, sans-serif;
   color: white;
   font-size: medium;
+  align-content: center;
+}
+
+.nav-brand {
+  font-family: 'UnispaceReg', Arial, Helvetica, sans-serif;
+  font-weight: bold;
+}
+
+.sp-player {
+  font-family: 'MiniSystem', 'Courier New', Courier, monospace;
 }

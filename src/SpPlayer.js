@@ -134,9 +134,9 @@ export default function CustomPlayer(props){
         return(
         <div id='playback'>
             <div>Now Playing: {nowPlaying.name}</div>
-            <div><img src={notPlaying.prevPlaying} alt='Previous Album' style={{ position: 'relative', left: '50px', height: 100 }}/> 
+            <div><img src={notPlaying.prevPlaying} alt='Previous Album' style={{ position: 'relative', left: '51px', height: 100, width: 100 }}/> 
             <img src={nowPlaying.albumArt} alt='Album Art' style={{ position: 'relative', height: 150, zIndex: 1 }}/>
-            <img src={notPlaying.nextPlaying} alt='Next Album' style={{ position: 'relative', left: '-50px', height: 100 }}/></div>  
+            <img src={notPlaying.nextPlaying} alt='Next Album' style={{ position: 'relative', left: '-48px', height: 100, width: 100 }}/></div>  
             <Button variant='success' id="btn-spotify" hidden={is_paused} onClick={() => { player.togglePlay(); setPauseAnimation(!is_paused); }}>
                 <MaterialIcon icon="play_arrow"  color={colorPalette.green._50}/> 
             </Button>
