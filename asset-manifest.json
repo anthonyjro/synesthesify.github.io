@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/synesthesify.github.io/static/css/main.e68060ed.chunk.css",
+    "main.js": "/synesthesify.github.io/static/js/main.982e83a1.chunk.js",
+    "main.js.map": "/synesthesify.github.io/static/js/main.982e83a1.chunk.js.map",
+    "runtime-main.js": "/synesthesify.github.io/static/js/runtime-main.f07483ba.js",
+    "runtime-main.js.map": "/synesthesify.github.io/static/js/runtime-main.f07483ba.js.map",
+    "static/css/2.f4739e7f.chunk.css": "/synesthesify.github.io/static/css/2.f4739e7f.chunk.css",
+    "static/js/2.8aa0b908.chunk.js": "/synesthesify.github.io/static/js/2.8aa0b908.chunk.js",
+    "static/js/2.8aa0b908.chunk.js.map": "/synesthesify.github.io/static/js/2.8aa0b908.chunk.js.map",
+    "static/js/3.b50a19da.chunk.js": "/synesthesify.github.io/static/js/3.b50a19da.chunk.js",
+    "static/js/3.b50a19da.chunk.js.map": "/synesthesify.github.io/static/js/3.b50a19da.chunk.js.map",
+    "index.html": "/synesthesify.github.io/index.html",
+    "service-worker.js": "/synesthesify.github.io/service-worker.js",
+    "service-worker.js.LICENSE.txt": "/synesthesify.github.io/service-worker.js.LICENSE.txt",
+    "service-worker.js.map": "/synesthesify.github.io/service-worker.js.map",
+    "static/css/2.f4739e7f.chunk.css.map": "/synesthesify.github.io/static/css/2.f4739e7f.chunk.css.map",
+    "static/css/main.e68060ed.chunk.css.map": "/synesthesify.github.io/static/css/main.e68060ed.chunk.css.map",
+    "static/js/2.8aa0b908.chunk.js.LICENSE.txt": "/synesthesify.github.io/static/js/2.8aa0b908.chunk.js.LICENSE.txt",
+    "static/media/App.css": "/synesthesify.github.io/static/media/unispace rg.72facae3.ttf"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.f07483ba.js",
+    "static/css/2.f4739e7f.chunk.css",
+    "static/js/2.8aa0b908.chunk.js",
+    "static/css/main.e68060ed.chunk.css",
+    "static/js/main.982e83a1.chunk.js"
+  ]
+}
