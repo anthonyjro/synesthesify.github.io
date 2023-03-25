@@ -49,7 +49,7 @@ function LoginModal(props){
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Button variant="success" href='http://localhost:8888/login'>Login</Button>
+        <Button variant="success" href='/login'>Login</Button>
       </Modal.Body>
     </Modal>
   )
@@ -156,9 +156,9 @@ function App() {
         song_duration = res.body.track.duration;
         analysis = res.body.sections;
         setAnalysisInfo(analysis);
-        if(song_duration > 0){
-          setDuration(song_duration);
-        }
+          if(song_duration > 0){
+            setDuration(song_duration);
+          }
         setIndex(0);
         setInNewSection(true);
         }
@@ -188,7 +188,7 @@ function App() {
           });
           setIndex(next);
           setInNewSection(true);}
-        }
+      }
     }
 
     else{

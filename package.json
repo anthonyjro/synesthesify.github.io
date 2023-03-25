@@ -1,6 +1,7 @@
 {
   "name": "synesthesify",
   "version": "0.1.0",
+  "homepage": "https://anthonyjro.github.io/synesthesify.github.io",
   "private": true,
   "proxy": "http://localhost:8888",
   "dependencies": {
@@ -36,6 +37,8 @@
     "workbox-streams": "^6.5.3"
   },
   "scripts": {
+    "predeploy" : "npm run build",
+    "deploy" : "gh-pages -d build",
     "start": "CHOKIDAR_USEPOLLING=true react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -63,6 +66,7 @@
     "browserify-zlib": "^0.2.0",
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.0",
+    "gh-pages": "^4.0.0",
     "os-browserify": "^0.3.0",
     "path-browserify": "^1.0.1",
     "querystring-es3": "^0.2.1",
